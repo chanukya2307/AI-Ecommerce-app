@@ -9,19 +9,36 @@ export default function ProductCard({ product }) {
       ? `₹${product.priceValue.toLocaleString()}`
       : product.price || "Price not available";
 
+  // 🎨 Platform color mapping
+  const platformColor = {
+    Amazon: "bg-yellow-100 text-yellow-800",
+    Flipkart: "bg-blue-100 text-blue-800",
+    Myntra: "bg-pink-100 text-pink-700"
+  }[platformName] || "bg-gray-100 text-gray-700";
+
   return (
     <div className="relative group bg-white border rounded-xl p-4 shadow-sm hover:shadow-xl transition-all duration-300">
 
       {/* 🏪 PLATFORM BADGE */}
-      <span className="absolute top-3 left-3 text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full font-medium">
+      <span
+        className={`absolute top-3 left-3 text-xs px-2 py-1 rounded-full font-medium ${platformColor}`}
+      >
         {platformName}
       </span>
+
+      {/* 🤖 AI BEST VALUE BADGE (OPTIONAL) */}
+      {product.aiScore >= 8 && (
+        <span className="absolute top-3 right-3 bg-green-600 text-white text-xs px-2 py-1 rounded-full">
+          Best Value
+        </span>
+      )}
 
       {/* 🖼️ Product Image */}
       <div className="h-40 flex items-center justify-center">
         <img
           src={product.image || "/placeholder.png"}
           alt={product.title}
+          loading="lazy"
           className="max-h-full object-contain transition-transform duration-300 group-hover:scale-105"
         />
       </div>
@@ -49,6 +66,7 @@ export default function ProductCard({ product }) {
         href={product.url}
         target="_blank"
         rel="noreferrer"
+        aria-label={`View ${product.title} on ${platformName}`}
         className="block mt-4 bg-black text-white text-center py-2 rounded-lg hover:bg-gray-800 transition font-medium"
       >
         View on {platformName}
@@ -60,6 +78,7 @@ export default function ProductCard({ product }) {
         <img
           src={product.image || "/placeholder.png"}
           alt={product.title}
+          loading="lazy"
           className="h-32 mx-auto object-contain"
         />
 
@@ -87,6 +106,7 @@ export default function ProductCard({ product }) {
           href={product.url}
           target="_blank"
           rel="noreferrer"
+          aria-label={`View ${product.title} on ${platformName}`}
           className="bg-black text-white text-center py-2 rounded-md text-sm hover:bg-gray-800 transition"
         >
           View on {platformName}
