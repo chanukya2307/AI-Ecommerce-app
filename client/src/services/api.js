@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://shopssy-backend.onrender.com",
+  baseURL: "shopssy-backend.vercel.app",
 });
 
 API.interceptors.request.use((req) => {
