@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "shopssy-backend.vercel.app",
+  baseURL: "shopssy-backend.vercel.app/api",
 });
 
 API.interceptors.request.use((req) => {
