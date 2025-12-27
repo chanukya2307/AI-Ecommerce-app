@@ -1,28 +1,38 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 import Results from "./pages/Results";
-
-const isAuthenticated = () => {
-  return localStorage.getItem("token");
-};
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
     <Routes>
+
+      {/* 🔓 PUBLIC ROUTES */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
+      {/* 🔐 PROTECTED ROUTES */}
       <Route
         path="/"
-        element={isAuthenticated() ? <Home /> : <Navigate to="/login" />}
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
       />
 
       <Route
         path="/results"
-        element={isAuthenticated() ? <Results /> : <Navigate to="/login" />}
+        element={
+          <ProtectedRoute>
+            <Results />
+          </ProtectedRoute>
+        }
       />
+
     </Routes>
   );
 }

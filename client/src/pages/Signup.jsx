@@ -13,91 +13,86 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
+    setError("");
 
     try {
-      await API.post("/auth/register", {
-        name,
-        email,
-        password
-      });
-
+      await API.post("/auth/register", { name, email, password });
       navigate("/login");
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Signup failed. Try again."
-      );
+    } catch {
+      setError("Signup failed 😬");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-lg shadow-md w-80"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          Create Account
-        </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-500 via-teal-500 to-blue-600 relative overflow-hidden">
 
-        {/* Name */}
-        <input
-          className="w-full p-2 border rounded mb-3"
-          placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
+      {/* BLUR BLOBS */}
+      <div className="absolute w-80 h-80 bg-white/20 rounded-full blur-3xl top-0 right-0 animate-pulse" />
+      <div className="absolute w-96 h-96 bg-black/20 rounded-full blur-3xl bottom-0 left-0 animate-pulse" />
 
-        {/* Email */}
-        <input
-          className="w-full p-2 border rounded mb-3"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+      {/* CARD */}
+      <div className="relative z-10 backdrop-blur-xl bg-white/20 border border-white/30 rounded-3xl shadow-2xl p-8 w-[90%] max-w-md">
 
-        {/* Password */}
-        <input
-          className="w-full p-2 border rounded mb-3"
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <h1 className="text-4xl font-extrabold text-white text-center">
+          Join the Club ✨
+        </h1>
+        <p className="text-white/80 text-center mt-2">
+          One search. Best prices. All platforms.
+        </p>
 
-        {/* Error */}
-        {error && (
-          <p className="text-red-500 text-sm mb-2 text-center">
-            {error}
-          </p>
-        )}
+        <form onSubmit={handleSubmit} className="mt-8 space-y-4">
 
-        {/* Button */}
-        <button
-          disabled={loading}
-          className={`w-full p-2 rounded text-white transition ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-green-600 hover:bg-green-700"
-          }`}
-        >
-          {loading ? "Creating account..." : "Signup"}
-        </button>
+          <input
+            placeholder="👤 Full Name"
+            className="w-full px-4 py-3 rounded-xl bg-white/80 focus:bg-white outline-none shadow"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
 
-        <p className="text-sm mt-4 text-center">
-          Already have an account?{" "}
-          <Link className="text-blue-500 hover:underline" to="/login">
+          <input
+            type="email"
+            placeholder="📧 Email"
+            className="w-full px-4 py-3 rounded-xl bg-white/80 focus:bg-white outline-none shadow"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="🔐 Password"
+            className="w-full px-4 py-3 rounded-xl bg-white/80 focus:bg-white outline-none shadow"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          {error && (
+            <p className="text-red-200 text-sm text-center">
+              {error}
+            </p>
+          )}
+
+          <button
+            disabled={loading}
+            className="w-full py-3 rounded-xl font-bold text-lg text-white
+              bg-black hover:scale-105 transition-transform duration-300 shadow-lg"
+          >
+            {loading ? "Creating..." : "Create Account 🚀"}
+          </button>
+        </form>
+
+        <p className="text-white text-sm text-center mt-6">
+          Already a member?{" "}
+          <Link to="/login" className="font-bold underline">
             Login
           </Link>
         </p>
-      </form>
+      </div>
     </div>
   );
 }

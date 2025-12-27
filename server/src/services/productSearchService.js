@@ -14,7 +14,7 @@ export const fetchProducts = async (query, page = 1, sortBy = "BEST") => {
         params: {
           q: query,
           page,
-          limit: 12, // 🔥 reduced from 20
+          limit: 20, 
           sort_by: sortMap[sortBy] || "BEST_MATCH",
           country: "IN"
         },
